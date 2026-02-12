@@ -33,3 +33,13 @@ productApp.put('/products/:id',async(req,res)=>{
     let updatedDoc = await ProductModel.findByIdAndUpdate(objId,{$set:{...obj}},{new:true,runValidators:true})
     res.status(200).json({message:"Product Updated !",payload:updatedDoc})
 })
+
+//delete product by id
+productApp.delete('/products/:id',async(req,res) => {
+    let objId = req.params.id;
+    let deleteProd = await ProductModel.findByIdAndDelete(objId);
+    if(!deleteProd){
+        return res.status(404).json({message : "deleted product"})
+    }
+    res.status(200).json({message : "user deleted", payload : deleteProd})
+})
